@@ -1,5 +1,5 @@
 name: modules
-title: Home
+title: Helm Workshop
 version: master
 nav:
   - modules/ROOT/nav.adoc
