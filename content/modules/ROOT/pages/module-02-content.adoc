@@ -6,10 +6,6 @@
 While Helm is most often used as a client within a GitOps framework and not executed directly in production environments, understanding how to test Helm commands locally will significantly speed up the development process for charts.
 By testing commands locally before committing changes to your GitOps workflow, you can quickly validate chart configurations, catch errors early, and iterate more efficiently on your Helm charts.
 
-== Installing Helm CLI with PowerShell
-
-_Content to be added._
-
 == Creating and Deploying Your Chart: A Workflow
 
 Let us walk through the typical workflow of creating a Helm chart, packaging it, pushing it to a registry, and installing it in a cluster.
