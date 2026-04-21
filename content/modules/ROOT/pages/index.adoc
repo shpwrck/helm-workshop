@@ -2,6 +2,10 @@
 
 This Helm workshop is designed to help you make better use of Helm in your Kubernetes deployments.
 
+ifdef::openshift-102-showroom[]
+include::openshift-102:ROOT:partial$cli-tools-container.adoc[]
+endif::[]
+
 == Prerequisites
 
 This workshop assumes the following:
