@@ -15,6 +15,11 @@ Create a new Helm chart for this exercise:
 helm create helper-chart
 ----
 
+[source,bash]
+----
+helm create helper-chart
+----
+
 === Step 2: Create a Helper Function
 
 Navigate to the templates directory and create a new file for your helper function:
@@ -23,6 +28,12 @@ Navigate to the templates directory and create a new file for your helper functi
 ----
 cd helper-chart\templates
 New-Item -Path "_helpers.tpl" -ItemType File
+----
+
+[source,bash]
+----
+cd helper-chart/templates
+touch _helpers.tpl
 ----
 
 Open `_helpers.tpl` and add a helper function that generates standard labels.
@@ -49,6 +60,11 @@ Create a new template file that uses your helper function to create a ConfigMap:
 [source,powershell]
 ----
 New-Item -Path "configmap.yaml" -ItemType File
+----
+
+[source,bash]
+----
+touch configmap.yaml
 ----
 
 Open `configmap.yaml` and add the following content:
@@ -79,6 +95,12 @@ cd ..\..
 helm template test-release ./helper-chart
 ----
 
+[source,bash]
+----
+cd ../..
+helm template test-release ./helper-chart
+----
+
 Review the output to confirm that:
 * The ConfigMap is created with the correct name
 * The labels from your helper function are properly applied
@@ -92,6 +114,12 @@ Create another resource (for example, a Secret) that also uses the same helper f
 ----
 cd helper-chart\templates
 New-Item -Path "secret.yaml" -ItemType File
+----
+
+[source,bash]
+----
+cd helper-chart/templates
+touch secret.yaml
 ----
 
 Add content to `secret.yaml`:
@@ -117,6 +145,12 @@ cd ..\..
 helm template test-release ./helper-chart
 ----
 
+[source,bash]
+----
+cd ../..
+helm template test-release ./helper-chart
+----
+
 Notice how both the ConfigMap and Secret now have identical labels, demonstrating how helper functions enable consistency across resources while eliminating duplication.
 
 == Exercise 2: Using Helper Functions from Dependencies
@@ -134,12 +168,23 @@ cd ..\..
 helm create app-chart
 ----
 
+[source,bash]
+----
+cd ../..
+helm create app-chart
+----
+
 === Step 2: Package the Helper Chart
 
 First, package the helper chart so it can be used as a dependency.
 If you are using a local file path, you can reference it directly, or package it for distribution:
 
 [source,powershell]
+----
+helm package ./helper-chart
+----
+
+[source,bash]
 ----
 helm package ./helper-chart
 ----
@@ -154,6 +199,12 @@ Edit the `Chart.yaml` file in your `app-chart` directory to add the helper chart
 ----
 cd app-chart
 notepad Chart.yaml
+----
+
+[source,bash]
+----
+cd app-chart
+# open Chart.yaml in an editor, for example: vi Chart.yaml
 ----
 
 Add a `dependencies` section to your `Chart.yaml`:
@@ -177,6 +228,11 @@ Download the dependency into your chart:
 helm dependency update
 ----
 
+[source,bash]
+----
+helm dependency update
+----
+
 This downloads the helper chart into the `charts/` directory and makes its template helpers available to your chart.
 
 === Step 5: Use the Helper Function from the Dependency
@@ -187,6 +243,12 @@ Create a new resource in your `app-chart` that uses the helper function from the
 ----
 cd templates
 New-Item -Path "deployment.yaml" -ItemType File
+----
+
+[source,bash]
+----
+cd templates
+touch deployment.yaml
 ----
 
 Add content to `deployment.yaml` that uses the helper function from the dependency:
@@ -229,6 +291,12 @@ cd ..\..
 helm template test-app ./app-chart
 ----
 
+[source,bash]
+----
+cd ../..
+helm template test-app ./app-chart
+----
+
 Review the output to confirm that:
 * The Deployment is created with the correct name
 * The labels from the helper-chart dependency are properly applied
@@ -251,6 +319,12 @@ cd ..\..
 helm create type-check-chart
 ----
 
+[source,bash]
+----
+cd ../..
+helm create type-check-chart
+----
+
 === Step 2: Add Type Checking to a Template
 
 Navigate to the templates directory and edit the `deployment.yaml` file:
@@ -259,6 +333,12 @@ Navigate to the templates directory and edit the `deployment.yaml` file:
 ----
 cd type-check-chart\templates
 notepad deployment.yaml
+----
+
+[source,bash]
+----
+cd type-check-chart/templates
+vi deployment.yaml
 ----
 
 Modify the deployment to include type checking for a required string value.
@@ -304,7 +384,12 @@ Edit or create `_helpers.tpl`:
 notepad _helpers.tpl
 ----
 
-Add a helper function that checks if a value is a string:
+[source,bash]
+----
+vi _helpers.tpl
+----
+
+Stay in the `type-check-chart/templates` directory (or from the project root, open `type-check-chart/templates/_helpers.tpl` in an editor). Then add a helper function that checks if a value is a string:
 
 [source,yaml]
 ----
@@ -364,6 +449,12 @@ cd ..
 notepad values.yaml
 ----
 
+[source,bash]
+----
+cd ..
+# vi values.yaml   (or: nano, code, or your editor)
+----
+
 Add an environment value:
 
 [source,yaml]
@@ -374,6 +465,11 @@ environment: "production"
 Render the chart to verify it works:
 
 [source,powershell]
+----
+helm template test-release ./type-check-chart
+----
+
+[source,bash]
 ----
 helm template test-release ./type-check-chart
 ----
@@ -397,6 +493,11 @@ Attempt to render the chart:
 helm template test-release ./type-check-chart
 ----
 
+[source,bash]
+----
+helm template test-release ./type-check-chart
+----
+
 The template should fail with an error message indicating that the value must be a string, demonstrating that your type checking is working correctly.
 
 This exercise demonstrates how to implement type checking in Helm templates, ensuring that values meet your requirements before they are used in your Kubernetes resources.
@@ -416,6 +517,12 @@ cd ..\..
 helm create combination-chart
 ----
 
+[source,bash]
+----
+cd ../..
+helm create combination-chart
+----
+
 === Step 2: Define Arrays in Values
 
 Edit the `values.yaml` file to define two arrays that will be combined:
@@ -424,6 +531,12 @@ Edit the `values.yaml` file to define two arrays that will be combined:
 ----
 cd combination-chart
 notepad values.yaml
+----
+
+[source,bash]
+----
+cd combination-chart
+# edit values.yaml in an editor, for example: vi values.yaml, nano, or: code values.yaml
 ----
 
 Add two arrays to your values file:
@@ -456,6 +569,12 @@ Navigate to the templates directory and create a template that generates ConfigM
 ----
 cd templates
 New-Item -Path "configmaps.yaml" -ItemType File
+----
+
+[source,bash]
+----
+cd templates
+touch configmaps.yaml
 ----
 
 Add content that uses nested `range` loops to create a ConfigMap for each combination:
@@ -501,6 +620,12 @@ cd ..\..
 helm template test-release ./combination-chart
 ----
 
+[source,bash]
+----
+cd ../..
+helm template test-release ./combination-chart
+----
+
 Review the output to verify that:
 * A ConfigMap is created for each combination of environment and configuration
 * Each ConfigMap has a unique name combining the environment name and configuration type
@@ -514,6 +639,11 @@ Count the ConfigMaps in the output to confirm all combinations are created:
 [source,powershell]
 ----
 helm template test-release ./combination-chart | Select-String -Pattern "kind: ConfigMap" | Measure-Object
+----
+
+[source,bash]
+----
+helm template test-release ./combination-chart | grep -c "kind: ConfigMap"
 ----
 
 You should see 6 ConfigMaps, one for each combination:

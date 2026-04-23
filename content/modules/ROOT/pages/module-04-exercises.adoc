@@ -15,9 +15,19 @@ Create a new Helm chart for this exercise:
 helm create oci-chart
 ----
 
+[source,bash]
+----
+helm create oci-chart
+----
+
 Package the chart:
 
 [source,powershell]
+----
+helm package ./oci-chart
+----
+
+[source,bash]
 ----
 helm package ./oci-chart
 ----
@@ -34,6 +44,11 @@ If you are using a local registry or need to log in:
 helm registry login <registry-url>
 ----
 
+[source,bash]
+----
+helm registry login <registry-url>
+----
+
 Push the packaged chart to an OCI registry:
 
 [source,powershell]
@@ -41,9 +56,19 @@ Push the packaged chart to an OCI registry:
 helm push oci-chart-0.1.0.tgz oci://<registry-url>/charts
 ----
 
+[source,bash]
+----
+helm push oci-chart-0.1.0.tgz oci://<registry-url>/charts
+----
+
 For example, if using a local registry:
 
 [source,powershell]
+----
+helm push oci-chart-0.1.0.tgz oci://localhost:5000/charts
+----
+
+[source,bash]
 ----
 helm push oci-chart-0.1.0.tgz oci://localhost:5000/charts
 ----
@@ -60,9 +85,19 @@ First, pull the artifact:
 docker pull <registry-url>/charts/oci-chart:0.1.0
 ----
 
+[source,bash]
+----
+docker pull <registry-url>/charts/oci-chart:0.1.0
+----
+
 For a local registry example:
 
 [source,powershell]
+----
+docker pull localhost:5000/charts/oci-chart:0.1.0
+----
+
+[source,bash]
 ----
 docker pull localhost:5000/charts/oci-chart:0.1.0
 ----
@@ -72,6 +107,11 @@ docker pull localhost:5000/charts/oci-chart:0.1.0
 Examine the manifest of the OCI artifact:
 
 [source,powershell]
+----
+docker manifest inspect <registry-url>/charts/oci-chart:0.1.0
+----
+
+[source,bash]
 ----
 docker manifest inspect <registry-url>/charts/oci-chart:0.1.0
 ----
@@ -91,6 +131,11 @@ Get detailed information about the OCI artifact:
 docker image inspect <registry-url>/charts/oci-chart:0.1.0
 ----
 
+[source,bash]
+----
+docker image inspect <registry-url>/charts/oci-chart:0.1.0
+----
+
 This provides comprehensive information about the artifact, including:
 * Architecture
 * Created timestamp
@@ -105,6 +150,12 @@ Examine the layers that make up the OCI artifact:
 [source,powershell]
 ----
 docker history <registry-url>/charts/oci-chart:0.1.0
+----
+
+[source,bash]
+----
+docker history <registry-url>/charts/oci-chart:0.1.0
+# (On Linux, Podman is often a drop-in: `podman history` instead of `docker history`.)
 ----
 
 This shows the layer history, helping you understand how the chart is structured as an OCI artifact.
