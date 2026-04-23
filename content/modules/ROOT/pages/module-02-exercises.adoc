@@ -5,9 +5,7 @@
 
 Before you work with Helm, enable shell completion so you can discover subcommands and options faster. Helm can generate a completion script for **PowerShell** and for **bash** (typical on Linux, macOS, and Git Bash). Use the option that matches your environment.
 
-=== Option: PowerShell (Windows, or PowerShell 7+)
-
-==== Step 1: Generate the autocomplete script
+=== Step 1: Generate the autocomplete script
 
 [source,powershell]
 ----
@@ -22,7 +20,7 @@ echo 'source <(helm completion bash)' >> ~/.bashrc
 The generated configuration is appended to your PowerShell profile. The `$PROFILE` variable is the path to that profile, which loads each time you start PowerShell.
 The bash panel appends a common completion loader line to your `~/.bashrc` (Bash 4+).
 
-==== Step 2: Reload your profile
+=== Step 2: Reload your profile
 
 [source,powershell]
 ----
@@ -36,7 +34,7 @@ source ~/.bashrc
 
 Alternatively, close and reopen the PowerShell window, or in bash open a new terminal after the previous `echo` to `~/.bashrc` (if you have not also run `source ~/.bashrc` in this session yet).
 
-==== Step 3: Verify
+=== Step 3: Verify
 
 Type `helm `, press the Tab key, and you should see command suggestions. Press Tab again to move through the list.
 
