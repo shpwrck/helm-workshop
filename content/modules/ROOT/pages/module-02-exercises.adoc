@@ -40,10 +40,6 @@ Alternatively, close and reopen the PowerShell window, or in bash open a new ter
 
 Type `helm `, press the Tab key, and you should see command suggestions. Press Tab again to move through the list.
 
-==== Step 1 (bash): Verify
-
-Type `helm `, press the Tab key twice, and you should see subcommand suggestions. If completion does not work, run `type _helm` or `type __helm` (if defined) to confirm the completion script is loaded, or re-run `source <(helm completion bash)`.
-
 == Exercise 1: Creating Charts and Working with Repositories
 
 In this exercise, you will create a Helm chart, explore its structure, work with repositories, and create a chart using a starter template.
