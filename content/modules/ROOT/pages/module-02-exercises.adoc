@@ -40,12 +40,6 @@ Alternatively, close and reopen the PowerShell window, or in bash open a new ter
 
 Type `helm `, press the Tab key, and you should see command suggestions. Press Tab again to move through the list.
 
-=== Option: Bash (Linux, macOS, or Git Bash)
-
-==== If you are using bash only (no PowerShell)
-
-The bash commands paired with the PowerShell steps in *Option: PowerShell* (above) are: append `source <(helm completion bash)` via `~/.bashrc` (see the first bash code block) and `source ~/.bashrc` (or run `source <(helm completion bash)` once in the current shell) as in the second bash code block. You can also add those lines to `~/.bash_profile` on macOS if you use a login shell.
-
 ==== Step 1 (bash): Verify
 
 Type `helm `, press the Tab key twice, and you should see subcommand suggestions. If completion does not work, run `type _helm` or `type __helm` (if defined) to confirm the completion script is loaded, or re-run `source <(helm completion bash)`.
