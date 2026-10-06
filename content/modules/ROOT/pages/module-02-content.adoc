@@ -96,15 +96,7 @@ Each version is stored separately in the registry, allowing you to maintain a hi
 === Step 7: Installing Your Chart
 
 With your chart now available in the registry, you can install it in your Kubernetes cluster.
-First, if needed, add the registry as a repository:
-
-[source,bash]
-----
-helm repo add my-registry oci://registry.example.com/charts
-helm repo update
-----
-
-Then install the chart:
+OCI registries are not added with `helm repo add`; instead, reference the chart directly by its `oci://` URL:
 
 [source,bash]
 ----

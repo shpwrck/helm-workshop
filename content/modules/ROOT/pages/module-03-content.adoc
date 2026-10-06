@@ -75,6 +75,7 @@ You can create Helm charts that contain only template helpers and no actual Kube
 These library charts serve as repositories of reusable template functions, named templates, and common patterns that can be shared across multiple charts in your organization.
 
 A library chart typically contains:
+
 * Template files with named templates (using `{{- define }}` blocks)
 * Helper functions for common operations
 * Standardized patterns for labels, annotations, resource naming, and other organizational conventions

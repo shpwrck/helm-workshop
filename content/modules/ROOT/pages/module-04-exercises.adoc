@@ -32,7 +32,7 @@ helm package ./oci-chart
 helm package ./oci-chart
 ----
 
-This creates a `oci-chart-0.1.0.tgz` file (assuming version 0.1.0 in Chart.yaml).
+This creates an `oci-chart-0.1.0.tgz` file (assuming version 0.1.0 in Chart.yaml).
 
 === Step 2: Push the Chart to an OCI Registry
 
@@ -117,6 +117,7 @@ docker manifest inspect <registry-url>/charts/oci-chart:0.1.0
 ----
 
 This shows the OCI manifest structure, including:
+
 * Media types
 * Layers
 * Annotations
@@ -137,6 +138,7 @@ docker image inspect <registry-url>/charts/oci-chart:0.1.0
 ----
 
 This provides comprehensive information about the artifact, including:
+
 * Architecture
 * Created timestamp
 * Environment variables
