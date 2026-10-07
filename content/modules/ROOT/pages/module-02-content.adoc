@@ -105,6 +105,21 @@ helm install my-release oci://registry.example.com/charts/my-chart --version 0.2
 
 This command creates a new Helm release named `my-release` using your chart from the registry.
 
+[NOTE]
+====
+On OpenShift, the default `restricted-v2` security context constraint runs pods with a random non-root user ID.
+The `nginx` image that `helm create` puts in `values.yaml` cannot start that way (`mkdir() "/var/cache/nginx/client_temp" failed (13: Permission denied)`), so its pod ends up in `CrashLoopBackOff`.
+To get a running pod, install the chart with the unprivileged NGINX image, which listens on port 8080:
+
+[source,bash]
+----
+helm install my-release oci://registry.example.com/charts/my-chart --version 0.2.0 \
+  --set image.repository=quay.io/nginx/nginx-unprivileged \
+  --set image.tag=stable-alpine \
+  --set service.port=8080
+----
+====
+
 === Step 8: Verifying Your Running Release
 
 After installation, verify that your release is running correctly.
@@ -112,7 +127,7 @@ Check the status of your release:
 
 [source,bash]
 ----
-helm status my-release
+helm status my-release --show-resources
 ----
 
 This shows detailed information about the release, including the status of all deployed resources.
