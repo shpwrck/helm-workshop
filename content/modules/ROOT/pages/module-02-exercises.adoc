@@ -134,21 +134,26 @@ This downloads the chart package to your current directory.
 === Step 6: Create a New Helm Chart with Jetstack as the Starter
 
 Create a new Helm chart using a Jetstack starter template.
-First, you may need to pull the starter chart or use it directly:
+`--starter` does not accept a repository chart reference such as `jetstack/cert-manager`; it looks up a starter by name in Helm's `starters` directory.
+First, unpack the cert-manager chart into that directory, then create your chart from it:
 
 [source,powershell]
 ----
-helm create my-jetstack-chart --starter jetstack/cert-manager
+helm pull jetstack/cert-manager --untar --untardir "$(helm env HELM_DATA_HOME)\starters"
+helm create my-jetstack-chart --starter cert-manager
 ----
 
 [source,bash]
 ----
-helm create my-jetstack-chart --starter jetstack/cert-manager
+helm pull jetstack/cert-manager --untar --untardir "$(helm env HELM_DATA_HOME)/starters"
+helm create my-jetstack-chart --starter cert-manager
 ----
 
-Alternatively, if you have a local starter, you can specify the path to the starter chart.
+Alternatively, `--starter` accepts an absolute path to an unpacked chart directory.
 
 This creates a new chart based on the Jetstack starter template, giving you a foundation that follows Jetstack's chart structure and best practices.
+
+NOTE: A starter provides only the templates and values. `helm create` writes a new `Chart.yaml` with `appVersion: 0.1.0`, and the cert-manager templates use `appVersion` as the default image tag. Before installing the new chart, set `appVersion` in `my-jetstack-chart/Chart.yaml` to the cert-manager version you pulled (shown by `helm show chart jetstack/cert-manager`, for example `v1.21.2`).
 
 == Exercise 2: Finding RBAC Settings for cert-manager
 
@@ -214,6 +219,7 @@ helm template cert-manager jetstack/cert-manager
 
 This command renders all the Kubernetes manifests that would be created when installing cert-manager.
 Search through the output for RBAC resources such as:
+
 * `ServiceAccount` resources
 * `ClusterRole` resources
 * `ClusterRoleBinding` resources
@@ -255,6 +261,7 @@ helm env
 ----
 
 This command shows important Helm configuration paths and settings, including:
+
 * The location of Helm's configuration directory
 * The location of the cache directory
 * The location of the data directory
@@ -266,13 +273,13 @@ These paths tell you where Helm stores its configuration files and cached data o
 
 Helm stores repository information in a configuration file.
 First, identify where Helm stores its configuration by checking the output from `helm env`, or use the default location.
-On Windows, this is typically in your user profile directory.
+On Windows, this is typically `%APPDATA%\helm`.
 
 View the repository configuration file:
 
 [source,powershell]
 ----
-Get-Content $env:USERPROFILE\.config\helm\repositories.yaml
+Get-Content $env:APPDATA\helm\repositories.yaml
 ----
 
 [source,bash]
@@ -301,12 +308,12 @@ View the registry configuration file:
 
 [source,powershell]
 ----
-Get-Content $env:USERPROFILE\.config\helm\registry.json
+Get-Content $env:APPDATA\helm\registry\config.json
 ----
 
 [source,bash]
 ----
-cat "$HOME/.config/helm/registry.json"
+cat "$HOME/.config/helm/registry/config.json"
 ----
 
 Alternatively, find the exact path using:
@@ -328,7 +335,7 @@ You can also explore the Helm configuration directory structure:
 
 [source,powershell]
 ----
-Get-ChildItem -Path $env:USERPROFILE\.config\helm\ -Recurse
+Get-ChildItem -Path $env:APPDATA\helm\ -Recurse
 ----
 
 [source,bash]

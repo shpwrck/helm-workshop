@@ -12,7 +12,7 @@ Features:
 
 . 0% cruft
 . Red Hat Demo Platform UI Bundle default
-. Dev Mode extension that displays the asciidoc attributes you have to work with
+. Dev Mode extension that displays the AsciiDoc attributes you have to work with
 . Content is generated using Antora, a static site generator for creating documentation sites from AsciiDoc documents.
 
 == Getting Started
@@ -47,14 +47,14 @@ Live-reload is not supported.
 . Open http://localhost:8080 in your browser
 . Run ./utilities/lab-build to build your html
 
-To rebuild your html, run `./utilites/build`.
+To rebuild your html, run `./utilities/lab-build`.
 
 == Editing Files
 
 Now you are ready to go!
 You can start editing the files in the `content/modules/ROOT/pages/` directory.
 
-Many modern editors such as Visual Studio Code offer live Asciidoc Preview extensions.
+Many modern editors such as Visual Studio Code offer live AsciiDoc Preview extensions.
 
 === Understanding the Basic Template Directory Structure
 
@@ -93,7 +93,7 @@ image::.images/ui-links.png[]
 
 == Dev Mode
 
-As a convenience to developers, the Dev Mode Extention (disabled by default) displays the asciidoc attributes you have to work with while writing your lab instructions.
+As a convenience to developers, the Dev Mode Extension (disabled by default) displays the AsciiDoc attributes you have to work with while writing your lab instructions.
 
 . Disable/Enable Dev Mode by changing `enabled: true` or `enabled: false`
 +

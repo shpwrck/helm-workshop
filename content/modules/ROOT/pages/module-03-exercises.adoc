@@ -3,7 +3,7 @@
 
 == Exercise 1: Creating and Using Helper Functions
 
-In this exercise, you will create a helper function (named template) and use it to generate a Kubernetes resource.
+In this exercise, you will use a helper function (named template) to generate a Kubernetes resource.
 Helper functions allow you to encapsulate common patterns and reuse them throughout your chart.
 
 === Step 1: Create a New Chart
@@ -20,24 +20,25 @@ helm create helper-chart
 helm create helper-chart
 ----
 
-=== Step 2: Create a Helper Function
+=== Step 2: Find the Helper Function
 
-Navigate to the templates directory and create a new file for your helper function:
+`helm create` already generated a `_helpers.tpl` file that contains a helper function for standard labels.
+Navigate to the templates directory and open `_helpers.tpl`:
 
 [source,powershell]
 ----
 cd helper-chart\templates
-New-Item -Path "_helpers.tpl" -ItemType File
+notepad _helpers.tpl
 ----
 
 [source,bash]
 ----
 cd helper-chart/templates
-touch _helpers.tpl
+# open _helpers.tpl in an editor, for example: vi _helpers.tpl
 ----
 
-Open `_helpers.tpl` and add a helper function that generates standard labels.
-Add the following content:
+Find the `helper-chart.labels` helper function.
+It looks like this:
 
 [source,yaml]
 ----
@@ -52,6 +53,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 ----
 
 This helper function creates a set of standard labels that can be reused across multiple resources.
+Do not paste a second copy of it into the file: each template name can be defined only once, and a duplicate `define` makes rendering fail with `multiple definition of template "helper-chart.labels"`.
 
 === Step 3: Create a Resource Using the Helper
 
@@ -102,6 +104,7 @@ helm template test-release ./helper-chart
 ----
 
 Review the output to confirm that:
+
 * The ConfigMap is created with the correct name
 * The labels from your helper function are properly applied
 * The labels are correctly indented in the YAML output
@@ -134,7 +137,7 @@ metadata:
 {{ include "helper-chart.labels" . | indent 4 }}
 type: Opaque
 data:
-  password: {{ .Values.password | b64enc }}
+  password: {{ .Values.password | default "changeme" | b64enc }}
 ----
 
 Render the chart again to see both resources using the same helper function:
@@ -164,13 +167,11 @@ Create a new Helm chart that will use the helper chart as a dependency:
 
 [source,powershell]
 ----
-cd ..\..
 helm create app-chart
 ----
 
 [source,bash]
 ----
-cd ../..
 helm create app-chart
 ----
 
@@ -237,21 +238,22 @@ This downloads the helper chart into the `charts/` directory and makes its templ
 
 === Step 5: Use the Helper Function from the Dependency
 
-Create a new resource in your `app-chart` that uses the helper function from the dependency:
+Change the Deployment in your `app-chart` so that it uses the helper function from the dependency.
+`helm create` already generated `deployment.yaml` in the `templates` directory; open it:
 
 [source,powershell]
 ----
 cd templates
-New-Item -Path "deployment.yaml" -ItemType File
+notepad deployment.yaml
 ----
 
 [source,bash]
 ----
 cd templates
-touch deployment.yaml
+# open deployment.yaml in an editor, for example: vi deployment.yaml
 ----
 
-Add content to `deployment.yaml` that uses the helper function from the dependency:
+Replace the entire contents of `deployment.yaml` with the following, which uses the helper function from the dependency:
 
 [source,yaml]
 ----
@@ -298,6 +300,7 @@ helm template test-app ./app-chart
 ----
 
 Review the output to confirm that:
+
 * The Deployment is created with the correct name
 * The labels from the helper-chart dependency are properly applied
 * The helper function from the dependency is accessible and working
@@ -315,13 +318,11 @@ Create a new Helm chart for this exercise:
 
 [source,powershell]
 ----
-cd ..\..
 helm create type-check-chart
 ----
 
 [source,bash]
 ----
-cd ../..
 helm create type-check-chart
 ----
 
@@ -466,11 +467,13 @@ Render the chart to verify it works:
 
 [source,powershell]
 ----
+cd ..
 helm template test-release ./type-check-chart
 ----
 
 [source,bash]
 ----
+cd ..
 helm template test-release ./type-check-chart
 ----
 
@@ -513,13 +516,11 @@ Create a new Helm chart for this exercise:
 
 [source,powershell]
 ----
-cd ..\..
 helm create combination-chart
 ----
 
 [source,bash]
 ----
-cd ../..
 helm create combination-chart
 ----
 
@@ -582,7 +583,7 @@ Add content that uses nested `range` loops to create a ConfigMap for each combin
 [source,yaml]
 ----
 {{- range $env := .Values.environments }}
-{{- range $config := .Values.configurations }}
+{{- range $config := $.Values.configurations }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -604,6 +605,7 @@ data:
 ----
 
 This template uses nested `range` loops:
+
 * The outer loop iterates over `environments`
 * The inner loop iterates over `configurations`
 * For each combination, it creates a ConfigMap with a unique name and data
@@ -627,6 +629,7 @@ helm template test-release ./combination-chart
 ----
 
 Review the output to verify that:
+
 * A ConfigMap is created for each combination of environment and configuration
 * Each ConfigMap has a unique name combining the environment name and configuration type
 * The data in each ConfigMap reflects the values from both arrays
@@ -647,6 +650,7 @@ helm template test-release ./combination-chart | grep -c "kind: ConfigMap"
 ----
 
 You should see 6 ConfigMaps, one for each combination:
+
 * development-standard
 * development-high-availability
 * staging-standard

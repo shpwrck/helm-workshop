@@ -54,7 +54,7 @@ A chart is like a class in programming.
 A **Helm release** is an instance of a chart that has been deployed to a Kubernetes cluster.
 When you install a chart, Helm creates a release with a unique name.
 You can have multiple releases of the same chart, each with different configurations.
-A release tracks the state of the deployed resources and allows you to upgrade, rollback, or uninstall the resources.
+A release tracks the state of the deployed resources and allows you to upgrade, roll back, or uninstall the resources.
 ====
 
 *What is the purpose of values.yaml in a Helm chart?*
@@ -179,9 +179,9 @@ This history includes:
 
 * **Description**: Optional notes about what changed in that revision.
 
-To rollback, you use `helm rollback <release-name> <revision-number>`, which reinstalls the resources from the specified revision.
+To roll back, you use `helm rollback <release-name> <revision-number>`, which reinstalls the resources from the specified revision.
 Helm maintains this history in Kubernetes secrets, allowing you to see all revisions with `helm history <release-name>` and revert to any previous state if needed.
 ====
 
-If you could not answer all of the questions, that is perfectlyokay.
+If you could not answer all of the questions, that is perfectly okay.
 We will be reviewing these concepts and exploring more advanced topics as we progress through the workshop.
